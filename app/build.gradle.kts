@@ -47,8 +47,8 @@ publishing{
                 name = "GitHubPackages"
                 url = uri("https://maven.pkg.github.com/ngabomugisharobert/sdking")
                 credentials {
-                    username = "ngabo.mugisha.bro@gmail.com"
-                    password = "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"
+                    username = System.getenv("MY_SDK_USERNAME")
+                    password = System.getenv("MY_SDK_TOKEN")
                 }
             }
         }
