@@ -1,6 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.library")
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish")
 }
 
 android {
@@ -8,12 +9,8 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.nmrobert.mysdk"
         minSdk = 28
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -34,6 +31,30 @@ android {
         jvmTarget = "1.8"
     }
 }
+
+publishing{
+    publishing{
+        publications {
+            create<MavenPublication>("release") {
+                groupId = "com.nmrobert.mysdk"
+                artifactId = "sdking"
+                version = "1.0"
+                artifact("$buildDir/outputs/aar/app-release.aar")
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/ngabomugisharobert/sdking")
+                credentials {
+                    username = "ngabo.mugisha.bro@gmail.com"
+                    password = "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"
+                }
+            }
+        }
+    }
+}
+
 
 dependencies {
 

@@ -1,0 +1,28 @@
+name: Publish SDK
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers the workflow on version tags, e.g., v1.0.0
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Build and Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MY_SDK_TOKEN: ${{ secrets.MY_SDK_TOKEN }}  
+        run: ./gradlew publishReleasePublicationToGitHubPackagesRepository
